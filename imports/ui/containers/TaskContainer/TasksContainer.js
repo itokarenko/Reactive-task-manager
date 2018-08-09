@@ -18,13 +18,15 @@ export class TasksContainer extends Component {
     this.state = {
       tasks: this.props.tasks,
       isToast: false,
-      isModal: false
+      isModal: false,
+      category: '',
+      createdBy: ''
     }
 
     this.showToastBarOnUpdate = this.showToastBarOnUpdate.bind(this)
     this.createTask = this.createTask.bind(this)
     this.toggleModal = this.toggleModal.bind(this)
-    this.filterByCategory = this.filterByCategory.bind(this)
+    this.filterBy = this.filterBy.bind(this)
     this.renderTopButton = this.renderTopButton.bind(this)
     this.cleanFilter = this.cleanFilter.bind(this)
   }
@@ -68,39 +70,40 @@ export class TasksContainer extends Component {
    * Render List of Tasks
    */
   renderTasks() {
-    if (this.state.category) {
+    if (this.state.category || this.state.createdBy) {
+      const filterValue = this.state.category ? 'category' : 'createdBy'
+
       return this.state.tasks.map(task => {
-        if (task.category === this.state.category) {
-          console.log(task.category)
+        if (task[filterValue] === this.state[filterValue]) {
           return <Task title={task.title} createdBy={task.createdBy} key={task._id}
-                category={task.category} id={task._id}
-                filterByCategory={this.filterByCategory}/>
+                       category={task.category} id={task._id}
+                       filterBy={this.filterBy}/>
         }
       }).reverse()
     } else {
       return this.state.tasks.map(task => <Task title={task.title} createdBy={task.createdBy} key={task._id}
                                                 category={task.category} id={task._id}
-                                                filterByCategory={this.filterByCategory}/>).reverse()
+                                                filterBy={this.filterBy}/>).reverse()
     }
   }
 
   /**
    * Sets state value of a category to be filtered
-   * @param category
+   * @param filter {key: value} for state
    */
-  filterByCategory(category) {
-    this.setState({category})
+  filterBy(filter) {
+    this.setState(filter)
   }
 
   /**
    * Cleans category filter
    */
   cleanFilter() {
-    this.setState({category: ''})
+    this.setState({category: '', createdBy: ''})
   }
 
-  renderTopButton () {
-    if (this.state.category) {
+  renderTopButton() {
+    if (this.state.category || this.state.createdBy) {
       return <Button onClick={this.cleanFilter} className="default" className="full">Clean filter</Button>
     } else {
       return <Button onClick={this.toggleModal} color="success" className="full">Create Task</Button>
@@ -113,7 +116,7 @@ export class TasksContainer extends Component {
    */
   componentWillReceiveProps(nextProps) {
     this.setState({tasks: nextProps.tasks})
-    
+
     if (this.state.tasks.length !== 0) {
       this.showToastBarOnUpdate()
     }

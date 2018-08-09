@@ -9,7 +9,7 @@ import './TaskModal.css'
 export default class TaskModal extends React.Component {
   constructor (props) {
     super(props)
-    console.log(this.props)
+
     this.state = {
       name: this.props.name || '',
       category: this.props.category || '',

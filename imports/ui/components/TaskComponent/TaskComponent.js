@@ -61,8 +61,8 @@ export default class TaskComponent extends Component {
           <Row>
             <Col xs="8">
               <h1>{this.props.title}</h1>
-              <span>Author: {this.props.createdBy}</span>
-              <Badge onClick={() => {this.props.filterByCategory(this.props.category)}} pill>{this.props.category}</Badge>
+              <span onClick={() => {this.props.filterBy({createdBy: this.props.createdBy})}}>Author: {this.props.createdBy}</span>
+              <Badge onClick={() => {this.props.filterBy({category: this.props.category})}} pill>{this.props.category}</Badge>
             </Col>
             <Col xs="4">
               <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} className='float-right'>
@@ -89,7 +89,8 @@ export default class TaskComponent extends Component {
 
 TaskComponent.propTypes ={
   id: PropTypes.string.isRequired,
-  filterByCategory: PropTypes.func.isRequired,
+  filterBy: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
-  category: PropTypes.string
+  category: PropTypes.string,
+  author: PropTypes.string
 }
