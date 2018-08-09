@@ -20,6 +20,8 @@ export default class TaskComponent extends Component {
     this.deleteTask = this.deleteTask.bind(this)
     this.editTask = this.editTask.bind(this)
     this.toggleTaskModal = this.toggleTaskModal.bind(this)
+    this.handleCategoryFilter = this.handleCategoryFilter.bind(this)
+    this.handleAuthorFilter = this.handleAuthorFilter.bind(this)
   }
 
   /**
@@ -54,6 +56,20 @@ export default class TaskComponent extends Component {
     this.toggleTaskModal()
   }
 
+  /**
+   * handles callback for category filter
+   */
+  handleCategoryFilter() {
+    this.props.filterBy({category: this.props.category})
+  }
+
+  /**
+   * handles callback for author filter
+   */
+  handleAuthorFilter() {
+    this.props.filterBy({createdBy: this.props.createdBy})
+  }
+
   render() {
     return (
       <div>
@@ -61,8 +77,8 @@ export default class TaskComponent extends Component {
           <Row>
             <Col xs="8">
               <h1>{this.props.title}</h1>
-              <span onClick={() => {this.props.filterBy({createdBy: this.props.createdBy})}}>Author: {this.props.createdBy}</span>
-              <Badge onClick={() => {this.props.filterBy({category: this.props.category})}} pill>{this.props.category}</Badge>
+              <span onClick={this.handleAuthorFilter}>Author: {this.props.createdBy}</span>
+              <Badge onClick={this.handleCategoryFilter} pill>{this.props.category}</Badge>
             </Col>
             <Col xs="4">
               <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} className='float-right'>
@@ -87,7 +103,7 @@ export default class TaskComponent extends Component {
   }
 }
 
-TaskComponent.propTypes ={
+TaskComponent.propTypes = {
   id: PropTypes.string.isRequired,
   filterBy: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,

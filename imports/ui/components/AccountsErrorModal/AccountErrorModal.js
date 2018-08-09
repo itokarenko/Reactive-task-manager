@@ -24,7 +24,7 @@ class AccountErrorModal extends React.Component {
 export default AccountErrorModal;
 
 
-AccountErrorModal.propTypes ={
+AccountErrorModal.propTypes = {
   error: PropTypes.string.isRequired,
   toggleModal: PropTypes.bool.isRequired,
   toggle: PropTypes.func.isRequired,

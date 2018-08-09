@@ -3,9 +3,6 @@ import {withTracker} from 'meteor/react-meteor-data'
 import NavBarComponent from './components/NavBarComponent/NavBarComponent'
 
 export class _App extends Component {
-  constructor(props) {
-    super(props)
-  }
 
   /**
    * Prevent switching to login route if user is logged in

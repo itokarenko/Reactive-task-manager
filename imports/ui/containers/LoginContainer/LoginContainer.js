@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Col, Button, Form, FormGroup, Label, Input, Row} from 'reactstrap';
 import AccountErrorModal from '../../components/AccountsErrorModal/AccountErrorModal'
 import {Accounts} from 'meteor/accounts-base'
-import { FlowRouter } from 'meteor/kadira:flow-router'
+import {FlowRouter} from 'meteor/kadira:flow-router'
 
 /**
  * Login container

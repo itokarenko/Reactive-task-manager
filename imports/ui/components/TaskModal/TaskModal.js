@@ -1,5 +1,15 @@
 import React from 'react'
-import {Button, Modal, ModalHeader, ModalBody, ModalFooter, InputGroup, InputGroupAddon, InputGroupText, Input} from 'reactstrap'
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
+  Input
+} from 'reactstrap'
 import PropTypes from 'prop-types';
 import './TaskModal.css'
 
@@ -7,7 +17,7 @@ import './TaskModal.css'
  * Task Modal
  */
 export default class TaskModal extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.state = {
@@ -17,10 +27,11 @@ export default class TaskModal extends React.Component {
 
     this.updateName = this.updateName.bind(this)
     this.updateCategory = this.updateCategory.bind(this)
+    this.handleSuccess = this.handleSuccess.bind(this)
   }
 
   updateName(e) {
-      this.setState({name: e.target.value})
+    this.setState({name: e.target.value})
   }
 
   updateCategory(e) {
@@ -32,11 +43,19 @@ export default class TaskModal extends React.Component {
    * necessary to keep input value up to date after editing
    * @param nextProps
    */
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     this.setState({
       name: nextProps.name || '',
       category: nextProps.category || ''
     })
+  }
+
+  /**
+   * Handle props update
+   */
+  handleSuccess() {
+    this.props.onSuccess(this.state.name, this.state.category)
+    this.setState({name: '', category: ''})
   }
 
   render() {
@@ -58,10 +77,7 @@ export default class TaskModal extends React.Component {
           </InputGroup>
         </ModalBody>
         <ModalFooter>
-          <Button color="success" onClick={() => {
-            this.props.onSuccess(this.state.name, this.state.category)
-            this.setState({name: '', category: ''})
-          }} disabled={!this.state.name}>Save</Button>{' '}
+          <Button color="success" onClick={this.handleSuccess} disabled={!this.state.name}>Save</Button>{' '}
           <Button color="danger" onClick={this.props.toggleModal}>Cancel</Button>
         </ModalFooter>
       </Modal>
@@ -69,7 +85,7 @@ export default class TaskModal extends React.Component {
   }
 }
 
-TaskModal.propTypes ={
+TaskModal.propTypes = {
   modal: PropTypes.bool.isRequired,
   toggleModal: PropTypes.func.isRequired,
   onSuccess: PropTypes.func.isRequired,
