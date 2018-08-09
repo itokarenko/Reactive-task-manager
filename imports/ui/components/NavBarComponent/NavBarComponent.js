@@ -31,6 +31,13 @@ export class NavBarComponent extends Component {
   }
 
   /**
+   * Redirect user to tasks page
+   */
+  goToTasksPage() {
+    FlowRouter.go('/tasks');
+  }
+
+  /**
    * Redirect user to login page
    */
   goToLoginPage() {
@@ -56,6 +63,11 @@ export class NavBarComponent extends Component {
               <NavItem>
                 <NavLink className={this.props.currentUser ? 'd-none' : ''} onClick={this.goToLoginPage}>
                   Login
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink className={this.props.currentUser ? '' : 'd-none'} onClick={this.goToTasksPage}>
+                  Tasks
                 </NavLink>
               </NavItem>
               <NavItem>
